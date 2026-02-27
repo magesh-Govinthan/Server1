@@ -66,7 +66,7 @@ router.post("/forgot-password", async (req, res) => {
   user.resetTokenExpiry = Date.now() + 15 * 60 * 1000; 
   await user.save();
 
-  const resetLink = `https://server1-f1r1.onrender.com/api/auth/reset-password/${token}`;
+  const resetLink = `https://reset-password-drab.vercel.app/reset-password/${token}`;
 
   await sendEmail(email, resetLink);
 
