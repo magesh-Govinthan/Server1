@@ -11,7 +11,7 @@ const sendEmail = async (email, link) => {
 
   await transporter.sendMail({
     from: process.env.EMAIL,
-    to: email,
+    to,
     subject: "Password Reset Link",
     html: `<h3>Click below to reset password</h3>
            <a href="${link}">${link}</a>`,
