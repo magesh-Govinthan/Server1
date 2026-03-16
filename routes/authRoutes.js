@@ -66,9 +66,13 @@ router.post("/forgot-password", async (req, res) => {
   user.resetTokenExpiry = Date.now() + 15 * 60 * 1000; 
   await user.save();
 
-  const resetLink = `https://reset-password-drab.vercel.app/reset-password/${token}`;
+  // const resetLink = `https://reset-password-drab.vercel.app/reset-password/${token}`;
 
-  await sendEmail(email, resetLink);
+  // await sendEmail(email, resetLink);
+  const link = `https://reset-password-drab.vercel.app/reset-password/${token}`;
+  const html = `<a href="${link}">Click here</a>`;
+
+  await sendEmail(email, "reset password", html);
 
   res.json({ message: "Reset link sent to email" });
 });

@@ -1,22 +1,40 @@
-import nodemailer from "nodemailer";
+import { BrevoClient } from "@getbrevo/brevo";
+import dotenv from "dotenv";
 
-const sendEmail = async (email, link) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
+dotenv.config();
 
-  await transporter.sendMail({
-    from: process.env.EMAIL,
-    to: email,
-    subject: "Password Reset Link",
-    html: `<h3>Click below to reset password</h3>
-           <a href="${link}">${link}</a>`,
-  });
+// Initialize Brevo client with your API key
+const client = new BrevoClient({
+  apiKey: process.env.BREVO_API_KEY,
+});
+
+/**
+ * Send email using Brevo API
+ * @param {string} to - recipient email
+ * @param {string} subject - email subject
+ * @param {string} htmlContent - body content
+ */
+export const sendEmail = async (to, subject, htmlContent) => {
+  try {
+    const response = await client.transactionalEmails.sendTransacEmail({
+      sender: {
+        email: process.env.EMAIL_FROM,
+        name: "Your App or Brand",
+      },
+      to: [
+        {
+          email: to,
+          name: "Magesh",
+        },
+      ],
+      subject,
+      htmlContent,
+    });
+
+    console.log("Email sent:", response);
+    return response;
+  } catch (err) {
+    console.error("Brevo send error:", err);
+    throw err;
+  }
 };
-
-
-export default sendEmail;
