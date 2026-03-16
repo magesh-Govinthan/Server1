@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/Users.js";
 import crypto from "crypto";
-import sendEmail from "../utills/sendEmail.js";
+import { sendEmail } from "../utills/sendEmail.js";
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
