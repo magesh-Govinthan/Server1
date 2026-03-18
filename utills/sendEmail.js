@@ -19,7 +19,7 @@ export const sendEmail = async (to, subject, htmlContent) => {
     const response = await client.transactionalEmails.sendTransacEmail({
       sender: {
         email: process.env.EMAIL_FROM,
-        name: "Your App or Brand",
+        name: "Reset Password",
       },
       to: [
         {
